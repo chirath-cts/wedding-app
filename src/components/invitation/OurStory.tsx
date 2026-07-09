@@ -1,8 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { weddingConfig } from "@/lib/config";
+import { fadeUp, slideIn } from "@/lib/motion";
+import { TiltCard } from "./TiltCard";
 
 export function OurStory() {
   const { t } = useLanguage();
@@ -10,25 +13,45 @@ export function OurStory() {
   return (
     <section id="story" className="bg-ivory px-6 py-20 sm:py-28">
       <div className="mx-auto flex max-w-4xl flex-col items-center gap-10 text-center">
-        <h2 className="font-serif text-3xl text-rose-dark sm:text-4xl">
+        <motion.h2
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={fadeUp}
+          className="font-serif text-3xl text-rose-dark sm:text-4xl"
+        >
           {t("story.title")}
-        </h2>
-        <p className="max-w-2xl text-base leading-relaxed text-charcoal/80 sm:text-lg">
+        </motion.h2>
+        <motion.p
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={fadeUp}
+          className="max-w-2xl text-base leading-relaxed text-charcoal/80 sm:text-lg"
+        >
           {weddingConfig.storyText}
-        </p>
-        <div className="grid w-full grid-cols-2 gap-4 sm:gap-6">
+        </motion.p>
+        <div
+          className="grid w-full grid-cols-2 gap-4 sm:gap-6"
+          style={{ perspective: 1000 }}
+        >
           {weddingConfig.storyImages.map((src, i) => (
-            <div
+            <motion.div
               key={src}
-              className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-blush shadow-md"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-80px" }}
+              variants={slideIn(i === 0 ? "left" : "right")}
             >
-              <Image
-                src={src}
-                alt={`${t("story.title")} ${i + 1}`}
-                fill
-                className="object-cover"
-              />
-            </div>
+              <TiltCard className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-blush shadow-md">
+                <Image
+                  src={src}
+                  alt={`${t("story.title")} ${i + 1}`}
+                  fill
+                  className="object-cover"
+                />
+              </TiltCard>
+            </motion.div>
           ))}
         </div>
       </div>

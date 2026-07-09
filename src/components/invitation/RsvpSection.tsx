@@ -4,6 +4,7 @@ import { useActionState, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { submitRsvpAction, type RsvpState } from "@/lib/actions/rsvp";
+import { fadeUp } from "@/lib/motion";
 import type { Guest } from "@/lib/types";
 
 const initialState: RsvpState = { status: "idle" };
@@ -16,7 +17,13 @@ export function RsvpSection({ guest }: { guest: Guest | null }) {
 
   return (
     <section id="rsvp" className="bg-ivory px-6 py-20 sm:py-28">
-      <div className="mx-auto max-w-lg">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={fadeUp}
+        className="mx-auto max-w-lg"
+      >
         <h2 className="text-center font-serif text-3xl text-rose-dark sm:text-4xl">
           {t("rsvp.title")}
         </h2>
@@ -215,7 +222,7 @@ export function RsvpSection({ guest }: { guest: Guest | null }) {
             </motion.form>
           )}
         </AnimatePresence>
-      </div>
+      </motion.div>
     </section>
   );
 }

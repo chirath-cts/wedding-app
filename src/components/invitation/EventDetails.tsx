@@ -1,7 +1,9 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { weddingConfig } from "@/lib/config";
+import { fadeUp, staggerContainer } from "@/lib/motion";
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   weekday: "long",
@@ -26,29 +28,46 @@ export function EventDetails() {
 
   return (
     <section id="details" className="bg-blush px-6 py-20 sm:py-28">
-      <div className="mx-auto flex max-w-4xl flex-col items-center gap-10 text-center">
-        <h2 className="font-serif text-3xl text-rose-dark sm:text-4xl">
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-80px" }}
+        variants={staggerContainer}
+        className="mx-auto flex max-w-4xl flex-col items-center gap-10 text-center"
+      >
+        <motion.h2
+          variants={fadeUp}
+          className="font-serif text-3xl text-rose-dark sm:text-4xl"
+        >
           {t("details.title")}
-        </h2>
+        </motion.h2>
 
-        <div className="grid w-full max-w-md grid-cols-1 gap-4 sm:grid-cols-3">
-          <div className="rounded-xl bg-white/70 p-4">
+        <motion.div
+          variants={staggerContainer}
+          className="grid w-full max-w-md grid-cols-1 gap-4 sm:grid-cols-3"
+        >
+          <motion.div variants={fadeUp} className="rounded-xl bg-white/70 p-4">
             <p className="text-xs uppercase tracking-widest text-rose">{t("details.date")}</p>
             <p className="mt-1 font-serif text-charcoal">{dateFormatter.format(weddingDate)}</p>
-          </div>
-          <div className="rounded-xl bg-white/70 p-4">
+          </motion.div>
+          <motion.div variants={fadeUp} className="rounded-xl bg-white/70 p-4">
             <p className="text-xs uppercase tracking-widest text-rose">{t("details.time")}</p>
             <p className="mt-1 font-serif text-charcoal">{timeFormatter.format(weddingDate)}</p>
-          </div>
-          <div className="rounded-xl bg-white/70 p-4">
+          </motion.div>
+          <motion.div variants={fadeUp} className="rounded-xl bg-white/70 p-4">
             <p className="text-xs uppercase tracking-widest text-rose">{t("details.venue")}</p>
             <p className="mt-1 font-serif text-charcoal">{weddingConfig.venueName}</p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <p className="text-sm text-charcoal/70">{weddingConfig.venueAddress}</p>
+        <motion.p variants={fadeUp} className="text-sm text-charcoal/70">
+          {weddingConfig.venueAddress}
+        </motion.p>
 
-        <div className="aspect-video w-full max-w-2xl overflow-hidden rounded-2xl shadow-md">
+        <motion.div
+          variants={fadeUp}
+          className="aspect-video w-full max-w-2xl overflow-hidden rounded-2xl shadow-md"
+        >
           <iframe
             src={mapEmbedSrc}
             className="h-full w-full border-0"
@@ -56,17 +75,18 @@ export function EventDetails() {
             referrerPolicy="no-referrer-when-downgrade"
             title={weddingConfig.venueName}
           />
-        </div>
+        </motion.div>
 
-        <a
+        <motion.a
+          variants={fadeUp}
           href={mapDirectionsUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="rounded-full bg-rose-dark px-6 py-3 text-sm font-medium text-white shadow transition hover:bg-rose"
         >
           {t("details.getDirections")}
-        </a>
-      </div>
+        </motion.a>
+      </motion.div>
     </section>
   );
 }
