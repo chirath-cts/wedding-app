@@ -22,8 +22,11 @@ export const weddingConfig = {
 
   // Photos: drop your image files into the /public/images folder using
   // these exact filenames, and this whole site updates automatically.
+  // storyImages can have 1 photo (shown large and centered) or 2 (shown
+  // side by side) — add a "story-2.jpg" file and list it here if you want
+  // a second one.
   heroImage: "/images/hero.jpg",
-  storyImages: ["/images/story-1.jpg", "/images/story-2.jpg"],
+  storyImages: ["/images/story-1.jpg"],
 
   // Short "Our Story" text. Keep it a few sentences — this is a placeholder.
   storyText:

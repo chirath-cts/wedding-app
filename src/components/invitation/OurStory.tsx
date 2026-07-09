@@ -32,7 +32,11 @@ export function OurStory() {
           {weddingConfig.storyText}
         </motion.p>
         <div
-          className="grid w-full grid-cols-2 gap-4 sm:gap-6"
+          className={`grid w-full gap-4 sm:gap-6 ${
+            weddingConfig.storyImages.length === 1
+              ? "mx-auto max-w-sm grid-cols-1"
+              : "grid-cols-2"
+          }`}
           style={{ perspective: 1000 }}
         >
           {weddingConfig.storyImages.map((src, i) => (
