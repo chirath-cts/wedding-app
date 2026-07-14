@@ -17,13 +17,6 @@ create table if not exists guests (
   rsvp_status text not null default 'pending'
     check (rsvp_status in ('pending', 'attending', 'declined')),
 
-  adults integer not null default 0,
-  children integer not null default 0,
-
-  dietary text
-    check (dietary in ('normal', 'vegetarian', 'other')),
-  dietary_other text,
-
   wish_message text,
 
   -- Left empty on purpose: Phase 2 will fill this in for the QR-code

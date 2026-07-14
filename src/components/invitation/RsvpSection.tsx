@@ -6,7 +6,6 @@ import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { submitRsvpAction, type RsvpState } from "@/lib/actions/rsvp";
 import { fadeUp } from "@/lib/motion";
 import { SectionHeading } from "./SectionHeading";
-import { NumberStepper } from "./NumberStepper";
 import type { Guest } from "@/lib/types";
 
 const initialState: RsvpState = { status: "idle" };
@@ -42,13 +41,6 @@ export function RsvpSection({ guest }: { guest: Guest | null }) {
   const { t } = useLanguage();
   const [state, formAction, isPending] = useActionState(submitRsvpAction, initialState);
   const [attending, setAttending] = useState(true);
-  const [dietary, setDietary] = useState<"normal" | "vegetarian" | "other">("normal");
-
-  const dietaryLabel = {
-    normal: t("rsvp.dietaryNormal"),
-    vegetarian: t("rsvp.dietaryVegetarian"),
-    other: t("rsvp.dietaryOther"),
-  };
 
   return (
     <section
@@ -174,73 +166,6 @@ export function RsvpSection({ guest }: { guest: Guest | null }) {
                       </button>
                     </div>
                   </div>
-
-                  <AnimatePresence initial={false}>
-                    {attending && (
-                      <motion.div
-                        key="attending-fields"
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.35, ease: "easeInOut" }}
-                        className="flex flex-col gap-6 overflow-hidden"
-                      >
-                        <div className="flex gap-4">
-                          <NumberStepper
-                            name="adults"
-                            label={t("rsvp.adultsLabel")}
-                            min={0}
-                            defaultValue={1}
-                          />
-                          <NumberStepper
-                            name="children"
-                            label={t("rsvp.childrenLabel")}
-                            min={0}
-                            defaultValue={0}
-                          />
-                        </div>
-
-                        <div className="flex flex-col gap-2">
-                          <span className="text-sm font-medium text-charcoal/80">
-                            {t("rsvp.dietaryLabel")}
-                          </span>
-                          <div className="flex flex-wrap gap-2">
-                            {(["normal", "vegetarian", "other"] as const).map((option) => (
-                              <button
-                                key={option}
-                                type="button"
-                                onClick={() => setDietary(option)}
-                                aria-pressed={dietary === option}
-                                className={`rounded-full border px-5 py-2.5 text-sm font-medium transition active:scale-[0.97] ${
-                                  dietary === option
-                                    ? "border-rose bg-rose-dark text-white shadow-md shadow-rose/20"
-                                    : "border-blush-dark bg-white text-charcoal/60 hover:border-rose/40"
-                                }`}
-                              >
-                                {dietaryLabel[option]}
-                              </button>
-                            ))}
-                          </div>
-                          <input type="hidden" name="dietary" value={dietary} />
-                          <AnimatePresence initial={false}>
-                            {dietary === "other" && (
-                              <motion.input
-                                key="dietary-other"
-                                initial={{ opacity: 0, height: 0 }}
-                                animate={{ opacity: 1, height: "auto" }}
-                                exit={{ opacity: 0, height: 0 }}
-                                transition={{ duration: 0.25 }}
-                                type="text"
-                                name="dietaryOther"
-                                placeholder={t("rsvp.dietaryOtherPlaceholder")}
-                                className="rounded-2xl border border-blush-dark bg-white px-4 py-3 outline-none transition focus:border-rose focus:ring-2 focus:ring-rose/20"
-                              />
-                            )}
-                          </AnimatePresence>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
 
                   <label className="flex flex-col gap-1.5">
                     <span className="text-sm font-medium text-charcoal/80">

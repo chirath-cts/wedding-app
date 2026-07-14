@@ -18,20 +18,15 @@ export default async function AdminDashboardPage() {
         </div>
       )}
 
-      <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+      <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
         <StatCard label="Total Invited" value={stats.totalInvited} />
         <StatCard
           label="Confirmed Attending"
-          value={`${stats.confirmedAdults + stats.confirmedChildren}`}
-          sub={`${stats.confirmedAdults} adults, ${stats.confirmedChildren} children`}
+          value={stats.attendingCount}
+          sub={`${stats.attendingSeats} seat(s) reserved`}
         />
         <StatCard label="Declined" value={stats.declinedCount} />
         <StatCard label="Not Yet Responded" value={stats.pendingCount} />
-        <StatCard
-          label="Dietary (for caterer)"
-          value={stats.dietary.normal + stats.dietary.vegetarian + stats.dietary.other}
-          sub={`Normal: ${stats.dietary.normal} · Veg: ${stats.dietary.vegetarian} · Other: ${stats.dietary.other}`}
-        />
       </div>
     </div>
   );

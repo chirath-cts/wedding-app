@@ -12,15 +12,12 @@ const statusStyles: Record<Guest["rsvp_status"], string> = {
 export function GuestTable({ guests }: { guests: Guest[] }) {
   return (
     <div className="overflow-x-auto rounded-xl bg-white shadow-sm">
-      <table className="w-full min-w-[900px] text-left text-sm">
+      <table className="w-full min-w-[700px] text-left text-sm">
         <thead className="border-b border-blush-dark text-xs uppercase tracking-wide text-charcoal/50">
           <tr>
             <th className="px-4 py-3">Name</th>
             <th className="px-4 py-3">Seats</th>
             <th className="px-4 py-3">Status</th>
-            <th className="px-4 py-3">Adults</th>
-            <th className="px-4 py-3">Children</th>
-            <th className="px-4 py-3">Dietary</th>
             <th className="px-4 py-3">Table #</th>
             <th className="px-4 py-3">Wish</th>
             <th className="px-4 py-3">Invite Link</th>
@@ -49,15 +46,6 @@ export function GuestTable({ guests }: { guests: Guest[] }) {
                   >
                     {guest.rsvp_status}
                   </span>
-                </td>
-                <td className="px-4 py-3">{guest.adults}</td>
-                <td className="px-4 py-3">{guest.children}</td>
-                <td className="px-4 py-3">
-                  {guest.dietary
-                    ? guest.dietary === "other"
-                      ? guest.dietary_other || "Other"
-                      : guest.dietary
-                    : "—"}
                 </td>
                 <td className="px-4 py-3 text-charcoal/50">{guest.table_number ?? "—"}</td>
                 <td className="max-w-[200px] truncate px-4 py-3 text-charcoal/70" title={guest.wish_message ?? ""}>
@@ -88,7 +76,7 @@ export function GuestTable({ guests }: { guests: Guest[] }) {
           })}
           {guests.length === 0 && (
             <tr>
-              <td colSpan={10} className="px-4 py-8 text-center text-charcoal/50">
+              <td colSpan={7} className="px-4 py-8 text-center text-charcoal/50">
                 No guests yet — add your first guest above.
               </td>
             </tr>
