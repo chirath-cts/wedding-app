@@ -2,24 +2,13 @@
 
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { formatWeddingDate, formatWeddingTime } from "@/lib/i18n/dates";
 import { weddingConfig } from "@/lib/config";
 import { fadeUp, staggerContainer } from "@/lib/motion";
 import { SectionHeading } from "./SectionHeading";
 
-const dateFormatter = new Intl.DateTimeFormat("en-US", {
-  weekday: "long",
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-});
-
-const timeFormatter = new Intl.DateTimeFormat("en-US", {
-  hour: "numeric",
-  minute: "2-digit",
-});
-
 export function EventDetails() {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const weddingDate = new Date(weddingConfig.weddingDateISO);
   const mapQuery = encodeURIComponent(
     `${weddingConfig.venueName}, ${weddingConfig.venueAddress}`
@@ -44,11 +33,11 @@ export function EventDetails() {
         >
           <motion.div variants={fadeUp} className="rounded-xl bg-white/70 p-4">
             <p className="text-xs uppercase tracking-widest text-rose">{t("details.date")}</p>
-            <p className="mt-1 font-serif text-charcoal">{dateFormatter.format(weddingDate)}</p>
+            <p className="mt-1 font-serif text-charcoal">{formatWeddingDate(locale, weddingDate)}</p>
           </motion.div>
           <motion.div variants={fadeUp} className="rounded-xl bg-white/70 p-4">
             <p className="text-xs uppercase tracking-widest text-rose">{t("details.time")}</p>
-            <p className="mt-1 font-serif text-charcoal">{timeFormatter.format(weddingDate)}</p>
+            <p className="mt-1 font-serif text-charcoal">{formatWeddingTime(locale, weddingDate)}</p>
           </motion.div>
           <motion.div variants={fadeUp} className="rounded-xl bg-white/70 p-4">
             <p className="text-xs uppercase tracking-widest text-rose">{t("details.venue")}</p>

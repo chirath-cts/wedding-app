@@ -25,9 +25,9 @@
   --color-gold: var(--color-gold);
   --color-gold-light: var(--color-gold-light);
   --color-charcoal: var(--color-charcoal);
-  --font-sans: var(--font-body);
-  --font-serif: var(--font-heading);
-  --font-script: var(--font-script);
+  --font-sans: var(--font-body), var(--font-sinhala), sans-serif;
+  --font-serif: var(--font-heading), var(--font-sinhala), serif;
+  --font-script: var(--font-script), var(--font-sinhala), cursive;
 }
 
 html {

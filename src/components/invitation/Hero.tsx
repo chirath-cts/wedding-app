@@ -4,20 +4,14 @@ import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
+import { formatWeddingDate } from "@/lib/i18n/dates";
 import { weddingConfig } from "@/lib/config";
 import { Countdown } from "./Countdown";
 import { staggerContainer, fadeUp } from "@/lib/motion";
 import type { Guest } from "@/lib/types";
 
-const dateFormatter = new Intl.DateTimeFormat("en-US", {
-  weekday: "long",
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-});
-
 export function Hero({ guest }: { guest: Guest | null }) {
-  const { t } = useLanguage();
+  const { t, locale } = useLanguage();
   const weddingDate = new Date(weddingConfig.weddingDateISO);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -79,7 +73,7 @@ export function Hero({ guest }: { guest: Guest | null }) {
         </motion.p>
 
         <motion.div variants={fadeUp} className="font-serif text-lg text-white sm:text-xl">
-          {dateFormatter.format(weddingDate)}
+          {formatWeddingDate(locale, weddingDate)}
         </motion.div>
         <motion.div variants={fadeUp} className="text-sm text-white/80">
           {weddingConfig.venueName}
