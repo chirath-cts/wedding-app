@@ -6,6 +6,7 @@ import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { weddingConfig } from "@/lib/config";
 import { fadeUp, slideIn } from "@/lib/motion";
 import { TiltCard } from "./TiltCard";
+import { SectionHeading } from "./SectionHeading";
 
 export function OurStory() {
   const { t } = useLanguage();
@@ -13,15 +14,7 @@ export function OurStory() {
   return (
     <section id="story" className="bg-ivory px-6 py-20 sm:py-28">
       <div className="mx-auto flex max-w-4xl flex-col items-center gap-10 text-center">
-        <motion.h2
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={fadeUp}
-          className="font-serif text-3xl text-rose-dark sm:text-4xl"
-        >
-          {t("story.title")}
-        </motion.h2>
+        <SectionHeading accent={t("story.accent")} title={t("story.title")} />
         <motion.p
           initial="hidden"
           whileInView="visible"

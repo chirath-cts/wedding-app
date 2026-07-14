@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { weddingConfig } from "@/lib/config";
 import { fadeUp, staggerContainer } from "@/lib/motion";
+import { SectionHeading } from "./SectionHeading";
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   weekday: "long",
@@ -35,12 +36,7 @@ export function EventDetails() {
         variants={staggerContainer}
         className="mx-auto flex max-w-4xl flex-col items-center gap-10 text-center"
       >
-        <motion.h2
-          variants={fadeUp}
-          className="font-serif text-3xl text-rose-dark sm:text-4xl"
-        >
-          {t("details.title")}
-        </motion.h2>
+        <SectionHeading accent={t("details.accent")} title={t("details.title")} />
 
         <motion.div
           variants={staggerContainer}
