@@ -43,6 +43,7 @@ export const translations = {
       time: "Time",
       venue: "Venue",
       getDirections: "Get Directions",
+      addToCalendar: "Add to Calendar",
     },
     rsvp: {
       title: "RSVP",
@@ -103,6 +104,7 @@ export const translations = {
       time: "වේලාව",
       venue: "ස්ථානය",
       getDirections: "මග පෙන්වීම",
+      addToCalendar: "දිනදර්ශනයට එක් කරන්න",
     },
     rsvp: {
       title: "පැමිණීම දන්වන්න",
