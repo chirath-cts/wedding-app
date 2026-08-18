@@ -1,12 +1,45 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 
 export function MusicPlayer({ musicSrc }: { musicSrc: string }) {
   const { t } = useLanguage();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    let cancelled = false;
+    const events: Array<keyof DocumentEventMap> = ["pointerdown", "keydown"];
+
+    const tryStartOnInteraction = () => {
+      audio.play().then(() => {
+        if (!cancelled) setIsPlaying(true);
+      }).catch(() => {});
+    };
+
+    // Browsers block audio-with-sound until the visitor has interacted with
+    // the page, so a true autoplay attempt here will usually be rejected.
+    // If it is, fall back to starting on the very first tap/click/keypress
+    // anywhere on the page — as close to "on by default" as the platform
+    // allows, without needing the guest to find the music button.
+    audio.play().then(
+      () => {
+        if (!cancelled) setIsPlaying(true);
+      },
+      () => {
+        events.forEach((event) => document.addEventListener(event, tryStartOnInteraction, { once: true }));
+      }
+    );
+
+    return () => {
+      cancelled = true;
+      events.forEach((event) => document.removeEventListener(event, tryStartOnInteraction));
+    };
+  }, []);
 
   const toggle = () => {
     const audio = audioRef.current;
@@ -22,7 +55,7 @@ export function MusicPlayer({ musicSrc }: { musicSrc: string }) {
 
   return (
     <>
-      <audio ref={audioRef} src={musicSrc} loop preload="none" />
+      <audio ref={audioRef} src={musicSrc} loop preload="auto" />
       <button
         type="button"
         onClick={toggle}
