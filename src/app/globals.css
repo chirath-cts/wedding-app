@@ -38,3 +38,31 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+
+/* Slow gold light sweep across the couple's names in the hero. */
+@keyframes name-shimmer {
+  0%,
+  15% {
+    background-position: 200% 0;
+  }
+  65%,
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.name-shimmer {
+  background-image: linear-gradient(
+    100deg,
+    #fff 30%,
+    var(--color-gold-light) 45%,
+    #fff9ec 50%,
+    var(--color-gold-light) 55%,
+    #fff 70%
+  );
+  background-size: 260% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: name-shimmer 5s ease-in-out infinite;
+}

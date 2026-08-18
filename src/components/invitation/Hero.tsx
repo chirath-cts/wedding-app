@@ -7,6 +7,7 @@ import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { formatWeddingDate } from "@/lib/i18n/dates";
 import { weddingConfig } from "@/lib/config";
 import { Countdown } from "./Countdown";
+import { FloatingSparkles } from "./FloatingSparkles";
 import { staggerContainer, fadeUp } from "@/lib/motion";
 import type { Guest } from "@/lib/types";
 
@@ -43,6 +44,8 @@ export function Hero({ guest }: { guest: Guest | null }) {
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/60" />
       </motion.div>
 
+      <FloatingSparkles />
+
       <motion.div
         className="relative z-10 flex flex-col items-center gap-6"
         style={{ opacity: contentOpacity, y: contentY }}
@@ -61,11 +64,19 @@ export function Hero({ guest }: { guest: Guest | null }) {
 
         <motion.h1
           variants={fadeUp}
-          className="font-script text-6xl leading-tight text-white sm:text-8xl"
+          className="relative font-script text-6xl leading-tight sm:text-8xl"
         >
-          {weddingConfig.partner1Name}
-          <span className="mx-3 text-gold-light">&amp;</span>
-          {weddingConfig.partner2Name}
+          <span className="name-shimmer">{weddingConfig.partner1Name}</span>
+          <span className="relative mx-3 inline-block text-gold-light">
+            <motion.span
+              className="absolute inset-0 -z-10 rounded-full bg-gold-light/40 blur-xl"
+              animate={{ opacity: [0.3, 0.8, 0.3], scale: [0.9, 1.15, 0.9] }}
+              transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+              aria-hidden
+            />
+            &amp;
+          </span>
+          <span className="name-shimmer">{weddingConfig.partner2Name}</span>
         </motion.h1>
 
         <motion.p variants={fadeUp} className="max-w-md text-base text-white/90 sm:text-lg">
@@ -84,10 +95,14 @@ export function Hero({ guest }: { guest: Guest | null }) {
         </motion.div>
       </motion.div>
 
-      <div className="absolute bottom-8 z-10 flex flex-col items-center gap-1 text-white/80">
+      <div className="absolute bottom-8 z-10 flex flex-col items-center gap-2 text-white/80">
         <span className="text-xs uppercase tracking-widest">{t("hero.scrollHint")}</span>
-        <span className="animate-bounce text-lg" aria-hidden>
-          ↓
+        <span className="flex h-9 w-6 items-start justify-center rounded-full border-2 border-white/50 p-1.5" aria-hidden>
+          <motion.span
+            className="h-1.5 w-1.5 rounded-full bg-gold-light"
+            animate={{ y: [0, 12, 0], opacity: [1, 0.3, 1] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          />
         </span>
       </div>
     </section>
