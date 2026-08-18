@@ -1,5 +1,19 @@
 export type RsvpStatus = "pending" | "attending" | "declined";
 
+export interface SiteSettings {
+  partner1Name: string;
+  partner2Name: string;
+  weddingDateISO: string;
+  venueName: string;
+  venueAddress: string;
+  heroImage: string;
+  storyImages: string[];
+  storyText: string;
+  musicSrc: string;
+}
+
+export type UploadField = "hero" | "story1" | "story2" | "music";
+
 export interface Guest {
   id: string;
   invite_code: string | null;

@@ -34,3 +34,33 @@ create index if not exists guests_invite_code_idx on guests (invite_code);
 -- key, which bypasses RLS. This keeps every guest's data private — nobody
 -- can query the guests table directly from a browser.
 alter table guests enable row level security;
+
+-- Site content editable from Admin -> Site Content: names, date, venue,
+-- story text, and the URLs of the uploaded hero/story photos and music
+-- (the actual files live in the "site-assets" Storage bucket).
+create table if not exists site_settings (
+  id integer primary key default 1,
+  partner1_name text not null default 'Alex',
+  partner2_name text not null default 'Jordan',
+  wedding_date timestamptz not null default '2026-12-12T16:00:00+05:30',
+  venue_name text not null default 'Cinnamon Grand Colombo',
+  venue_address text not null default '77 Galle Rd, Colombo 00300, Sri Lanka',
+  story_text text,
+  hero_image_url text,
+  story_image_urls text[] not null default '{}',
+  music_url text,
+  updated_at timestamptz not null default now(),
+  constraint site_settings_singleton check (id = 1)
+);
+
+insert into site_settings (id) values (1)
+on conflict (id) do nothing;
+
+alter table site_settings enable row level security;
+
+-- Public storage bucket that holds uploaded hero/story photos and music.
+-- Public so guests' browsers can load the images/audio directly; only the
+-- admin panel (via the service role key) can write to it.
+insert into storage.buckets (id, name, public)
+values ('site-assets', 'site-assets', true)
+on conflict (id) do nothing;

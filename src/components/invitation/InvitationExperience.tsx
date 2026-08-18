@@ -7,7 +7,7 @@ import { Hero } from "./Hero";
 import { OurStory } from "./OurStory";
 import { EventDetails } from "./EventDetails";
 import { RsvpSection } from "./RsvpSection";
-import type { Guest } from "@/lib/types";
+import type { Guest, SiteSettings } from "@/lib/types";
 
 function TopNav() {
   const { t } = useLanguage();
@@ -26,15 +26,21 @@ function TopNav() {
   );
 }
 
-export function InvitationExperience({ guest }: { guest: Guest | null }) {
+export function InvitationExperience({
+  guest,
+  settings,
+}: {
+  guest: Guest | null;
+  settings: SiteSettings;
+}) {
   return (
     <LanguageProvider>
       <TopNav />
-      <MusicPlayer />
+      <MusicPlayer musicSrc={settings.musicSrc} />
       <LanguageToggle />
-      <Hero guest={guest} />
-      <OurStory />
-      <EventDetails />
+      <Hero guest={guest} settings={settings} />
+      <OurStory settings={settings} />
+      <EventDetails settings={settings} />
       <RsvpSection guest={guest} />
     </LanguageProvider>
   );

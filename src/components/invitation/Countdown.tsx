@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
-import { weddingConfig } from "@/lib/config";
 
 interface TimeLeft {
   days: number;
@@ -22,7 +21,7 @@ function getTimeLeft(targetIso: string): TimeLeft {
   };
 }
 
-export function Countdown() {
+export function Countdown({ weddingDateISO }: { weddingDateISO: string }) {
   const { t } = useLanguage();
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
 
@@ -30,12 +29,12 @@ export function Countdown() {
     // Syncing with the system clock (an external source), not deriving from
     // props/state — the documented exception to "don't setState in effects".
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setTimeLeft(getTimeLeft(weddingConfig.weddingDateISO));
+    setTimeLeft(getTimeLeft(weddingDateISO));
     const interval = setInterval(() => {
-      setTimeLeft(getTimeLeft(weddingConfig.weddingDateISO));
+      setTimeLeft(getTimeLeft(weddingDateISO));
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [weddingDateISO]);
 
   const units: Array<[number, string]> = timeLeft
     ? [

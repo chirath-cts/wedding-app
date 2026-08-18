@@ -5,15 +5,14 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { formatWeddingDate } from "@/lib/i18n/dates";
-import { weddingConfig } from "@/lib/config";
 import { Countdown } from "./Countdown";
 import { FloatingSparkles } from "./FloatingSparkles";
 import { staggerContainer, fadeUp } from "@/lib/motion";
-import type { Guest } from "@/lib/types";
+import type { Guest, SiteSettings } from "@/lib/types";
 
-export function Hero({ guest }: { guest: Guest | null }) {
+export function Hero({ guest, settings }: { guest: Guest | null; settings: SiteSettings }) {
   const { t, locale } = useLanguage();
-  const weddingDate = new Date(weddingConfig.weddingDateISO);
+  const weddingDate = new Date(settings.weddingDateISO);
   const sectionRef = useRef<HTMLElement>(null);
 
   const { scrollYProgress } = useScroll({
@@ -35,8 +34,8 @@ export function Hero({ guest }: { guest: Guest | null }) {
     >
       <motion.div className="absolute inset-0" style={{ y: imageY, scale: imageScale }}>
         <Image
-          src={weddingConfig.heroImage}
-          alt={`${weddingConfig.partner1Name} & ${weddingConfig.partner2Name}`}
+          src={settings.heroImage}
+          alt={`${settings.partner1Name} & ${settings.partner2Name}`}
           fill
           priority
           className="object-cover opacity-70"
@@ -66,7 +65,7 @@ export function Hero({ guest }: { guest: Guest | null }) {
           variants={fadeUp}
           className="relative font-script text-6xl leading-tight sm:text-8xl"
         >
-          <span className="name-shimmer">{weddingConfig.partner1Name}</span>
+          <span className="name-shimmer">{settings.partner1Name}</span>
           <span className="relative mx-3 inline-block text-gold-light">
             <motion.span
               className="absolute inset-0 -z-10 rounded-full bg-gold-light/40 blur-xl"
@@ -76,7 +75,7 @@ export function Hero({ guest }: { guest: Guest | null }) {
             />
             &amp;
           </span>
-          <span className="name-shimmer">{weddingConfig.partner2Name}</span>
+          <span className="name-shimmer">{settings.partner2Name}</span>
         </motion.h1>
 
         <motion.p variants={fadeUp} className="max-w-md text-base text-white/90 sm:text-lg">
@@ -87,11 +86,11 @@ export function Hero({ guest }: { guest: Guest | null }) {
           {formatWeddingDate(locale, weddingDate)}
         </motion.div>
         <motion.div variants={fadeUp} className="text-sm text-white/80">
-          {weddingConfig.venueName}
+          {settings.venueName}
         </motion.div>
 
         <motion.div variants={fadeUp} className="mt-6">
-          <Countdown />
+          <Countdown weddingDateISO={settings.weddingDateISO} />
         </motion.div>
       </motion.div>
 

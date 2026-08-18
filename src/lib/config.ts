@@ -1,7 +1,9 @@
 // ============================================================================
-// WEDDING CONFIG — edit the values below with your real details.
-// This is the ONE file you need to change to personalize the site.
-// After editing, save the file and push/redeploy to see changes live.
+// WEDDING CONFIG — fallback/default values.
+// The Admin -> Content page is now the normal way to edit your wedding
+// details and photos/music without touching code. These values are only
+// used until something is saved there (and as a safety net if the
+// database is ever unreachable).
 // ============================================================================
 
 export const weddingConfig = {

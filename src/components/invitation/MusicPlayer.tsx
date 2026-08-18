@@ -2,9 +2,8 @@
 
 import { useRef, useState } from "react";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
-import { weddingConfig } from "@/lib/config";
 
-export function MusicPlayer() {
+export function MusicPlayer({ musicSrc }: { musicSrc: string }) {
   const { t } = useLanguage();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -23,7 +22,7 @@ export function MusicPlayer() {
 
   return (
     <>
-      <audio ref={audioRef} src={weddingConfig.musicSrc} loop preload="none" />
+      <audio ref={audioRef} src={musicSrc} loop preload="none" />
       <button
         type="button"
         onClick={toggle}

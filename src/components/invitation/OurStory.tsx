@@ -3,10 +3,10 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
-import { weddingConfig } from "@/lib/config";
 import { slideIn } from "@/lib/motion";
 import { TiltCard } from "./TiltCard";
 import { SectionHeading } from "./SectionHeading";
+import type { SiteSettings } from "@/lib/types";
 
 // A photo in a white "polaroid" frame with a gold offset frame behind it.
 function FramedPhoto({
@@ -37,11 +37,9 @@ function FramedPhoto({
   );
 }
 
-export function OurStory() {
+export function OurStory({ settings }: { settings: SiteSettings }) {
   const { t } = useLanguage();
-  // Widened from the config's exact tuple type so the two-photo branch
-  // still type-checks when only one photo is configured.
-  const images: readonly string[] = weddingConfig.storyImages;
+  const images = settings.storyImages;
 
   return (
     <section
@@ -138,13 +136,13 @@ export function OurStory() {
               &ldquo;
             </span>
             <p className="relative text-base leading-loose text-charcoal/80 sm:text-lg">
-              {weddingConfig.storyText}
+              {settings.storyText}
             </p>
 
             {/* Script signature */}
             <div className="mt-8 flex flex-col items-center gap-1 md:items-start">
               <span className="font-script text-3xl text-rose-dark sm:text-4xl">
-                {weddingConfig.partner1Name} &amp; {weddingConfig.partner2Name}
+                {settings.partner1Name} &amp; {settings.partner2Name}
               </span>
               <span className="h-px w-24 bg-gradient-to-r from-gold/60 to-transparent" aria-hidden />
             </div>

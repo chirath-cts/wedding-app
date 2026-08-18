@@ -3,9 +3,9 @@
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n/LanguageProvider";
 import { formatWeddingDate, formatWeddingTime } from "@/lib/i18n/dates";
-import { weddingConfig } from "@/lib/config";
 import { fadeUp, staggerContainer } from "@/lib/motion";
 import { SectionHeading } from "./SectionHeading";
+import type { SiteSettings } from "@/lib/types";
 
 // Gold line icons for the three info cards.
 function CalendarIcon() {
@@ -35,25 +35,25 @@ function PinIcon() {
   );
 }
 
-// Builds a Google Calendar "add event" link from the wedding config.
-function buildCalendarUrl(): string {
-  const start = new Date(weddingConfig.weddingDateISO);
+// Builds a Google Calendar "add event" link from the wedding settings.
+function buildCalendarUrl(settings: SiteSettings): string {
+  const start = new Date(settings.weddingDateISO);
   const end = new Date(start.getTime() + 4 * 60 * 60 * 1000); // assume ~4h celebration
   const fmt = (d: Date) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
   const params = new URLSearchParams({
     action: "TEMPLATE",
-    text: `${weddingConfig.partner1Name} & ${weddingConfig.partner2Name} — Wedding`,
+    text: `${settings.partner1Name} & ${settings.partner2Name} — Wedding`,
     dates: `${fmt(start)}/${fmt(end)}`,
-    location: `${weddingConfig.venueName}, ${weddingConfig.venueAddress}`,
+    location: `${settings.venueName}, ${settings.venueAddress}`,
   });
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
 
-export function EventDetails() {
+export function EventDetails({ settings }: { settings: SiteSettings }) {
   const { t, locale } = useLanguage();
-  const weddingDate = new Date(weddingConfig.weddingDateISO);
+  const weddingDate = new Date(settings.weddingDateISO);
   const mapQuery = encodeURIComponent(
-    `${weddingConfig.venueName}, ${weddingConfig.venueAddress}`
+    `${settings.venueName}, ${settings.venueAddress}`
   );
   const mapEmbedSrc = `https://maps.google.com/maps?q=${mapQuery}&output=embed`;
   const mapDirectionsUrl = `https://maps.google.com/?q=${mapQuery}`;
@@ -61,7 +61,7 @@ export function EventDetails() {
   const cards = [
     { icon: <CalendarIcon />, label: t("details.date"), value: formatWeddingDate(locale, weddingDate) },
     { icon: <ClockIcon />, label: t("details.time"), value: formatWeddingTime(locale, weddingDate) },
-    { icon: <PinIcon />, label: t("details.venue"), value: weddingConfig.venueName },
+    { icon: <PinIcon />, label: t("details.venue"), value: settings.venueName },
   ];
 
   return (
@@ -131,7 +131,7 @@ export function EventDetails() {
           </motion.div>
 
           <motion.p variants={fadeUp} className="text-sm text-charcoal/70">
-            {weddingConfig.venueAddress}
+            {settings.venueAddress}
           </motion.p>
 
           {/* Map in a gold invitation-card frame */}
@@ -146,7 +146,7 @@ export function EventDetails() {
                   className="h-full w-full border-0"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title={weddingConfig.venueName}
+                  title={settings.venueName}
                 />
               </div>
             </div>
@@ -164,7 +164,7 @@ export function EventDetails() {
               {t("details.getDirections")}
             </motion.a>
             <motion.a
-              href={buildCalendarUrl()}
+              href={buildCalendarUrl(settings)}
               target="_blank"
               rel="noopener noreferrer"
               whileTap={{ scale: 0.97 }}

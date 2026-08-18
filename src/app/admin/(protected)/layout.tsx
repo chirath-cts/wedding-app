@@ -30,6 +30,9 @@ export default async function ProtectedAdminLayout({
             <Link href="/admin/guests" className="transition hover:text-rose-dark">
               Guests
             </Link>
+            <Link href="/admin/content" className="transition hover:text-rose-dark">
+              Site Content
+            </Link>
           </nav>
         </div>
         <form action={logoutAction}>

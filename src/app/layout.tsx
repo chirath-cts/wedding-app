@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Great_Vibes, Poppins, Noto_Sans_Sinhala } from "next/font/google";
-import { weddingConfig } from "@/lib/config";
+import { getSiteSettings } from "@/lib/data/settings";
 import "./globals.css";
 
 const bodyFont = Poppins({
@@ -29,10 +29,13 @@ const sinhalaFont = Noto_Sans_Sinhala({
   weight: ["300", "400", "500", "600"],
 });
 
-export const metadata: Metadata = {
-  title: `${weddingConfig.partner1Name} & ${weddingConfig.partner2Name}`,
-  description: `You're invited to the wedding of ${weddingConfig.partner1Name} & ${weddingConfig.partner2Name}`,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  return {
+    title: `${settings.partner1Name} & ${settings.partner2Name}`,
+    description: `You're invited to the wedding of ${settings.partner1Name} & ${settings.partner2Name}`,
+  };
+}
 
 export default function RootLayout({
   children,
