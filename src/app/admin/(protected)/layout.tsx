@@ -22,7 +22,7 @@ export default async function ProtectedAdminLayout({
     <div className="min-h-screen bg-ivory">
       <header className="flex items-center justify-between border-b border-blush-dark bg-white px-6 py-4">
         <div className="flex items-center gap-6">
-          <span className="font-serif text-lg text-rose-dark">Wedding Admin</span>
+          <span className="font-serif text-lg text-rose-dark">MyWeddingDestiny Admin</span>
           <nav className="flex gap-4 text-sm font-medium text-charcoal/70">
             <Link href="/admin" className="transition hover:text-rose-dark">
               Dashboard

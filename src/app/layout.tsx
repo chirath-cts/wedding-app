@@ -32,7 +32,8 @@ const sinhalaFont = Noto_Sans_Sinhala({
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
   return {
-    title: `${settings.partner1Name} & ${settings.partner2Name}`,
+    title: "My Wedding Destiny",
+    applicationName: "MyWeddingDestiny",
     description: `You're invited to the wedding of ${settings.partner1Name} & ${settings.partner2Name}`,
   };
 }
